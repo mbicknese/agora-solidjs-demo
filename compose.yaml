@@ -1,0 +1,19 @@
+---
+services:
+  web:
+    image: node:20-alpine
+    command: npm run dev -- --host
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.agora.tls=true
+      - traefik.http.routers.agora.tls.options=default
+      - traefik.http.routers.agora.rule=Host(`agora-172-16-2-14.traefik.me`)
+      - traefik.http.services.agora.loadbalancer.server.port=3000
+    networks: [dev-web]
+    working_dir: /repo
+    volumes:
+      - ./:/repo
+
+networks:
+  dev-web:
+    external: true
