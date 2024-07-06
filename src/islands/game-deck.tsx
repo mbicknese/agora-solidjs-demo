@@ -18,14 +18,13 @@ const hasVideoTrack = <T extends Pick<Player, "videoTrack">>(
   return player.videoTrack != null;
 };
 
-export default function GameDeck() {
+type Props = {
+  game: string;
+};
+export default function GameDeck({ game }: Props) {
   const [users, setUsers] = createStore<Record<string, Player>>({});
 
-  const uidPromise = client.join(
-    import.meta.env.VITE_AGORA_APPID,
-    "test",
-    null,
-  );
+  const uidPromise = client.join(import.meta.env.VITE_AGORA_APPID, game, null);
 
   client.on("user-published", async (user, mediaType) => {
     await client.subscribe(user, mediaType);

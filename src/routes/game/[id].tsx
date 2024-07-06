@@ -1,12 +1,13 @@
-import "./index.css";
+import { useParams } from "@solidjs/router";
 import { clientOnly } from "@solidjs/start";
 
 const GameDeck = clientOnly(() => import("~/islands/game-deck"));
 
-export default function Home() {
+export default function Game() {
+  const { id } = useParams<{ id: string }>();
   return (
     <main>
-      <p>Go to /game/any-id to see the app's functionality.</p>
+      <GameDeck game={id} />
     </main>
   );
 }
