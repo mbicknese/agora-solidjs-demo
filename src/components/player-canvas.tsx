@@ -1,12 +1,17 @@
 "use client";
 import "./player-canvas.css";
-import type { ICameraVideoTrack, IRemoteVideoTrack } from "agora-rtc-sdk-ng";
+import type {
+  ICameraVideoTrack,
+  IRemoteAudioTrack,
+  IRemoteVideoTrack,
+} from "agora-rtc-sdk-ng";
 import { createSignal, Show } from "solid-js";
 
 type Props = {
+  audio?: IRemoteAudioTrack;
   video: ICameraVideoTrack | IRemoteVideoTrack;
 };
-export default function PlayerCanvas({ video }: Props) {
+export default function PlayerCanvas({ audio, video }: Props) {
   const [connecting, setConnecting] = createSignal(true);
   const videoAnchor = <div class="video-wrapper"></div>;
 
@@ -15,6 +20,7 @@ export default function PlayerCanvas({ video }: Props) {
   queueMicrotask(() => {
     setConnecting(false);
     video.play(videoAnchor as HTMLElement);
+    audio?.play();
   });
   return (
     <div class="player-canvas">
