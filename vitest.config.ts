@@ -6,4 +6,9 @@ export default defineConfig({
   resolve: {
     conditions: ["development", "browser"],
   },
+  test: {
+    alias: {
+      "~/": new URL("./src/", import.meta.url).pathname,
+    },
+  },
 });

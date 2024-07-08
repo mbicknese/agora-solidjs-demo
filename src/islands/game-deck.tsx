@@ -1,6 +1,6 @@
 "use client";
 import AgoraRTC, {
-  type ICameraVideoTrack,
+  type ICameraVideoTrack, type IMicrophoneAudioTrack,
   type IRemoteAudioTrack,
   type IRemoteVideoTrack,
 } from "agora-rtc-sdk-ng";
@@ -13,7 +13,7 @@ import "./game-deck.css";
 type Player = {
   uid: string | number;
   videoTrack?: ICameraVideoTrack | IRemoteVideoTrack;
-  audioTrack?: IRemoteAudioTrack;
+  audioTrack?: IRemoteAudioTrack | IMicrophoneAudioTrack;
 };
 const hasVideoTrack = <T extends Pick<Player, "videoTrack">>(
   player: T,
@@ -41,7 +41,7 @@ export default function GameDeck({ game }: Props) {
       AgoraRTC.createCameraVideoTrack(),
       AgoraRTC.createMicrophoneAudioTrack(),
     ]);
-    setUsers(`${uid}`, { uid: `${uid}`, videoTrack });
+    setUsers(`${uid}`, { uid: `${uid}`, videoTrack, audioTrack });
     setIsHost(true);
     await client.publish([videoTrack, audioTrack]);
   };

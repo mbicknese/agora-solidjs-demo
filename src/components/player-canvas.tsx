@@ -2,16 +2,18 @@
 import "./player-canvas.css";
 import type {
   ICameraVideoTrack,
+  IMicrophoneAudioTrack,
   IRemoteAudioTrack,
   IRemoteVideoTrack,
 } from "agora-rtc-sdk-ng";
 import { createSignal, Show } from "solid-js";
+import MuteButton from "~/components/mute-button";
 
 type Props = {
-  audio?: IRemoteAudioTrack;
+  audio?: IRemoteAudioTrack | IMicrophoneAudioTrack;
   video: ICameraVideoTrack | IRemoteVideoTrack;
 };
-export default function PlayerCanvas({ audio, video }: Props) {
+export default function PlayerCanvas(props: Props) {
   const [connecting, setConnecting] = createSignal(true);
   const videoAnchor = <div class="video-wrapper"></div>;
 
@@ -19,8 +21,11 @@ export default function PlayerCanvas({ audio, video }: Props) {
   // the DOM as well. By waiting one tick, we ensure the element is rendered and placed in the hierarchy.
   queueMicrotask(() => {
     setConnecting(false);
-    video.play(videoAnchor as HTMLElement);
-    audio?.play();
+    props.video.play(videoAnchor as HTMLElement);
+    // When 'setDevice' is in the audio stream, it's the local stream and we don't want to feedback to our local client
+    if (props.audio != null && !("setDevice" in props.audio)) {
+      props.audio.play();
+    }
   });
   return (
     <div class="player-canvas">
@@ -28,6 +33,7 @@ export default function PlayerCanvas({ audio, video }: Props) {
         <p>Connecting ...</p>
       </Show>
       {videoAnchor}
+      <Show when={props.audio}>{(a) => <MuteButton audio={a()} />}</Show>
     </div>
   );
 }
