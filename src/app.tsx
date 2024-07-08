@@ -9,6 +9,15 @@ export default function App() {
       root={(props) => (
         <MetaProvider>
           <Title>Agora streaming demo</Title>
+          <link rel="stylesheet" href="https://unpkg.com/open-props" />
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/open-props/normalize.min.css"
+          />
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/open-props/buttons.min.css"
+          />
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}

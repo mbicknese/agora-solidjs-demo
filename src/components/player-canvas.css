@@ -1,6 +1,5 @@
 .player-canvas {
     aspect-ratio: 4/3;
-    max-height: 360px;
 }
 
 .player-canvas > .video-wrapper {
