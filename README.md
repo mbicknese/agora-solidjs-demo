@@ -1,16 +1,13 @@
-# SolidStart
+# Agora Solid.js demo
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+## Getting started
 
-## Creating a project
+Ensure you have an Agora account and registered app. Put the app id in the `VITE_AGORA_APPID` environment variable. An easy way to get this done is to copy the `.env.example` file to `.env` and fill out the value. 
 
-```bash
-# create a new project in the current directory
-npm init solid@latest
+## Known issues
 
-# create a new project in my-app
-npm init solid@latest my-app
-```
+ - For testing from a different device other than the hosting server, tls is required. One will need to provide their own https termination for the application to work.
+ - Firefox doesn't allow autoplaying of audio without user interaction. The Agora library doesn't seem to play well with this restriction, nor does it offer an easy way to retrieve the AudioContext, in order to manually approve the playback of audio.
 
 ## Developing
 
@@ -39,4 +36,4 @@ To run them, simply start:
 npm test
 ```
 
-## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
+#### This project was created with the [Solid CLI](https://solid-cli.netlify.app)

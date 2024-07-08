@@ -1,6 +1,7 @@
 "use client";
 import AgoraRTC, {
-  type ICameraVideoTrack, type IMicrophoneAudioTrack,
+  type ICameraVideoTrack,
+  type IMicrophoneAudioTrack,
   type IRemoteAudioTrack,
   type IRemoteVideoTrack,
 } from "agora-rtc-sdk-ng";
@@ -34,6 +35,7 @@ export default function GameDeck({ game }: Props) {
     await client.subscribe(user, mediaType);
     setUsers(`${user.uid}`, user);
   });
+  // TODO: we should cleanup when users disconnect, this is for post-demo purposes
 
   const join = async () => {
     const uid = await uidPromise;
